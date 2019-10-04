@@ -22,7 +22,6 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
-
 # Link rooms together
 
 room['outside'].n_to = room['foyer']
@@ -39,20 +38,36 @@ room['treasure'].s_to = room['narrow']
 #
 
 # Make a new player object that is currently in the 'outside' room.
-player = Player['outside']
+justin = Player(room['outside'])
 # Write a loop that:
-quit = False
-while not quit:
-    if
 # * Prints the current room name
-    print(room.name)
 # * Prints the current description (the textwrap module might be useful here).
-    print()
 # * Waits for user input and decides what to do.
 #
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
 #
 # If the user enters "q", quit the game.
-if q:
-    exit
+quit = False
+
+while not quit:
+    
+    command = input("enter here: ")
+    command_lower = command.lower()
+
+    if command_lower == 'q':
+        quit = True
+    elif command_lower == 'l':
+        print(justin.room)
+    elif command_lower in ['n','s','w','e']:
+        direction = command_lower + '_to'
+        if command_lower == 'n' and hasattr(justin.room, direction):
+            justin.room = justin.room.n_to
+        elif command_lower == 's' and hasattr(justin.room, direction):
+            justin.room = justin.room.s_to
+        elif command_lower == 'w' and hasattr(justin.room, direction):
+            justin.room = justin.room.w_to
+        elif command_lower == 'e' and hasattr(justin.room, direction):
+            justin.room = justin.room.e_to
+        else:
+            print("You can't go that way!")
